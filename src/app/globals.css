@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.loading-icon {
+  animation: animate 1s infinite linear;
+}
+
+@keyframes animate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(720deg);
+    /* transform: rotate(360deg); */
+  }
+}
+
+/* sm:bg-amber-300 md:bg-blue-300 lg:bg-red-300 xl:bg-fuchsia-300 2xl:bg-emerald-300 */

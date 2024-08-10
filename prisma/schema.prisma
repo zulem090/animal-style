@@ -1,0 +1,353 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(dbgenerated("(uuid())")) @db.VarChar(36)
+  type              String  @db.VarChar(200)
+  provider          String  @db.VarChar(200)
+  providerAccountId String  @map("provider_account_id") @db.VarChar(200)
+  refresh_token     String? @map("refresh_token") @db.Text
+  access_token      String? @map("access_token") @db.Text
+  expires_at        BigInt? @map("expires_at")
+  token_type        String? @map("token_type") @db.VarChar(200)
+  scope             String? @db.VarChar(200)
+  id_token          String? @map("id_token") @db.Text
+  session_state     String? @map("session_state") @db.VarChar(200)
+  userId            String? @map("id_usuario") @db.VarChar(36)
+  user              User?   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "account_ibfk_1")
+
+  @@index([userId], map: "id_usuario")
+  @@map("cuenta")
+}
+
+model Carrito {
+  idUsuario String   @map("id_usuario") @db.VarChar(36)
+  compra    BigInt
+  usuario   User     @relation(fields: [idUsuario], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "carrito_ibfk_1")
+  producto  Producto @relation(fields: [compra], references: [idProducto], onDelete: Cascade, onUpdate: NoAction, map: "carrito_ibfk_2")
+
+  @@id([idUsuario, compra])
+  @@index([compra], map: "compra")
+  @@map("carrito")
+}
+
+model Cita {
+  idCita        BigInt    @id @default(autoincrement())
+  fechaHoraCita DateTime  @map("fecha_hora_cita") @db.DateTime(0)
+  estado        String    @db.VarChar(30)
+  observaciones String    @db.VarChar(255)
+  idUsuario     String?   @map("id_usuario") @db.VarChar(36)
+  idPaciente    BigInt?   @map("id_paciente")
+  usuario       User?     @relation(fields: [idUsuario], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "cita_ibfk_1")
+  paciente      Paciente? @relation(fields: [idPaciente], references: [idPaciente], onDelete: Cascade, onUpdate: NoAction, map: "cita_ibfk_2")
+
+  @@index([idPaciente], map: "id_paciente")
+  @@index([idUsuario], map: "id_usuario")
+  @@map("cita")
+}
+
+model Ciudad {
+  codigoPostal Int        @id @map("codigo_postal")
+  nombre       String     @db.VarChar(200)
+  sucursal     Sucursal[]
+
+  @@map("ciudad")
+}
+
+model DetallesFactura {
+  idDetalles BigInt   @id @default(autoincrement()) @map("id_detalles")
+  precio     Decimal  @db.Decimal(10, 0)
+  cantidad   Int
+  estado     String   @db.VarChar(30)
+  idFactura  BigInt?  @map("id_factura")
+  factura    Factura? @relation(fields: [idFactura], references: [idFactura], onDelete: Cascade, onUpdate: NoAction, map: "detalles_factura_ibfk_1")
+
+  @@index([idFactura], map: "id_factura")
+  @@map("detalles_factura")
+}
+
+model Devolucion {
+  idDevolucion    BigInt   @id @default(autoincrement()) @map("id_devolucion")
+  fechaDevolucion DateTime @map("fecha_devolucion") @db.Date
+  motivo          String   @db.VarChar(255)
+  estado          String   @db.VarChar(30)
+  idFactura       BigInt?  @map("id_factura")
+  factura         Factura? @relation(fields: [idFactura], references: [idFactura], onDelete: Cascade, onUpdate: NoAction, map: "devolucion_ibfk_1")
+
+  @@index([idFactura], map: "id_factura")
+  @@map("devolucion")
+}
+
+model Empleado {
+  cedula       BigInt         @id
+  nombre       String         @db.VarChar(200)
+  cargo        String         @db.VarChar(50)
+  sueldo       Decimal        @db.Decimal(10, 0)
+  idSucursal   String?        @map("id_sucursal") @db.VarChar(200)
+  sucursal     Sucursal?      @relation(fields: [idSucursal], references: [direccion], onDelete: Cascade, onUpdate: NoAction, map: "empleado_ibfk_1")
+  especialista Especialista[]
+
+  @@index([idSucursal], map: "id_sucursal")
+  @@map("empleado")
+}
+
+model Envio {
+  codigoEnvio      BigInt    @id @default(autoincrement()) @map("codigo_envio")
+  direccionDestino String    @map("direccion_destino") @db.VarChar(200)
+  direccionOrigen  String    @map("direccion_origen") @db.VarChar(200)
+  fechaEnvio       DateTime  @map("fecha_envio") @db.Date
+  estado           String    @db.VarChar(30)
+  factura          Factura[]
+
+  @@map("envio")
+}
+
+model Especialista {
+  idEspecialista BigInt    @id @default(autoincrement()) @map("id_especialista")
+  nombre         String    @map("nombre") @db.VarChar(200)
+  especialidad   String    @map("especialidad") @db.VarChar(30)
+  descripcion    String    @map("descripcion") @db.Text
+  contacto       String    @map("contacto") @db.VarChar(200)
+  idEmpleado     BigInt?   @map("id_empleado")
+  empleado       Empleado? @relation(fields: [idEmpleado], references: [cedula], onDelete: Cascade, onUpdate: NoAction, map: "especialista_ibfk_1")
+
+  @@index([idEmpleado], map: "id_empleado")
+  @@map("especialista")
+}
+
+model Factura {
+  idFactura        BigInt            @id @default(autoincrement()) @map("id_factura")
+  fecha            DateTime          @map("fecha") @db.Date
+  total            Decimal           @map("total") @db.Decimal(10, 0)
+  idUsuario        String?           @map("id_usuario") @db.VarChar(36)
+  idEnvio          BigInt?           @map("id_envio")
+  detallesFacturas DetallesFactura[]
+  devoluciones     Devolucion[]
+  usuarios         User?             @relation(fields: [idUsuario], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "factura_ibfk_1")
+  envios           Envio?            @relation(fields: [idEnvio], references: [codigoEnvio], onDelete: Cascade, onUpdate: NoAction, map: "factura_ibfk_2")
+
+  @@index([idEnvio], map: "id_envio")
+  @@index([idUsuario], map: "id_usuario")
+  @@map("factura")
+}
+
+model Foro {
+  idForo        BigInt   @id @default(autoincrement()) @map("id_foro")
+  nombreForo    String   @map("nombre_foro") @db.VarChar(200)
+  categoria     String   @map("categoria") @db.VarChar(30)
+  descripcion   String   @map("descripcion") @db.Text
+  fechaCreacion DateTime @map("fecha_creacion") @db.Date
+  idUsuario     String?  @map("id_usuario") @db.VarChar(36)
+  usuario       User?    @relation(fields: [idUsuario], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "foro_ibfk_1")
+
+  @@index([idUsuario], map: "id_usuario")
+  @@map("foro")
+}
+
+model Insumo {
+  idInsumo    BigInt     @id @default(autoincrement()) @map("id_insumo")
+  nombre      String     @map("nombre") @db.VarChar(200)
+  tipo        String     @map("tipo") @db.VarChar(50)
+  descripcion String?    @map("descripcion") @db.Text
+  idProveedor BigInt?    @map("id_proveedor")
+  proveedor   Proveedor? @relation(fields: [idProveedor], references: [nit], onDelete: Cascade, onUpdate: NoAction, map: "insumo_ibfk_1")
+
+  @@index([idProveedor], map: "id_proveedor")
+  @@map("insumo")
+}
+
+model Inventario {
+  idInventario      BigInt           @id @default(autoincrement()) @map("id_inventario")
+  cantidad          Int              @map("cantidad")
+  tipo              String           @map("tipo") @db.VarChar(50)
+  precio            Decimal          @map("precio") @db.Decimal(10, 0)
+  descripcion       String           @map("descripcion") @db.Text
+  idSucursalVirtual BigInt?          @map("id_sucursal_virtual")
+  sucursalVirtual   SucursalVirtual? @relation(fields: [idSucursalVirtual], references: [idSucursalVirtual], onDelete: Cascade, onUpdate: NoAction, map: "inventario_ibfk_1")
+
+  @@index([idSucursalVirtual], map: "id_sucursal_virtual")
+  @@map("inventario")
+}
+
+model MetodoPago {
+  idPago           BigInt   @id @default(autoincrement()) @map("id_pago")
+  tipoTarjeta      String   @map("tipo_tarjeta") @db.VarChar(10)
+  numeroTarjeta    BigInt   @map("numero_tarjeta")
+  nombreTitular    String   @map("nombre_titular") @db.VarChar(200)
+  fechaVencimiento DateTime @map("fecha_vencimiento") @db.Date
+  codigoSeguridad  Int      @map("codigo_seguridad")
+  idUsuario        String?  @map("id_usuario") @db.VarChar(36)
+  usuario          User?    @relation(fields: [idUsuario], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "metodo_pago_ibfk_1")
+
+  @@index([idUsuario], map: "id_usuario")
+  @@map("metodo_pago")
+}
+
+model Oferta {
+  idCompra    BigInt    @map("id_compra")
+  idPromocion BigInt    @map("id_promocion")
+  producto    Producto  @relation(fields: [idCompra], references: [idProducto], onDelete: Cascade, onUpdate: NoAction, map: "oferta_ibfk_1")
+  promocion   Promocion @relation(fields: [idPromocion], references: [idPromocion], onDelete: Cascade, onUpdate: NoAction, map: "oferta_ibfk_2")
+
+  @@id([idCompra, idPromocion])
+  @@index([idPromocion], map: "promocion")
+  @@map("oferta")
+}
+
+model Paciente {
+  idPaciente      BigInt @id @default(autoincrement()) @map("id_paciente")
+  nombre          String @map("nombre") @db.VarChar(50)
+  identificacion  BigInt @map("identificacion")
+  edad            Int    @map("edad")
+  especie         String @map("especie") @db.VarChar(10)
+  historialMedico String @map("historial_medico") @db.VarChar(255)
+  cita            Cita[]
+
+  @@map("paciente")
+}
+
+model Marca {
+  idMarca  BigInt     @id @default(autoincrement()) @map("id_marca") @db.BigInt()
+  nombre   String?    @map("nombre") @db.VarChar(30)
+  Producto Producto[]
+
+  @@map("marca")
+}
+
+model Producto {
+  idProducto  BigInt        @id @default(autoincrement()) @map("id_producto")
+  nombre      String        @map("nombre") @db.VarChar(150)
+  precio      Decimal       @map("precio") @db.Decimal(10, 0)
+  cantidad    Int           @map("cantidad")
+  descripcion String?       @map("descripcion") @db.Text
+  estado      String        @default(dbgenerated("(_utf8mb4\\'ACTIVO\\')")) @map("estado") @db.VarChar(30)
+  imagen      Bytes?        @map("imagen") @db.LongBlob()
+  idTipo      BigInt?       @map("id_tipo") @db.BigInt()
+  idMarca     BigInt?       @map("id_marca") @db.BigInt()
+  tipo        TipoProducto? @relation(fields: [idTipo], references: [idTipoProducto], onDelete: Cascade, onUpdate: NoAction, map: "producto_ibfk_1")
+  marca       Marca?        @relation(fields: [idMarca], references: [idMarca], map: "producto_ibfk_2")
+
+  carritos Carrito[]
+  ofertas  Oferta[]
+  Resenas  Resena[]
+
+  @@map("producto")
+}
+
+model Promocion {
+  idPromocion       BigInt   @id @default(autoincrement()) @map("id_promocion")
+  nombre            String   @map("nombre") @db.VarChar(150)
+  descuento         Decimal  @map("descuento") @db.Decimal(10, 0)
+  descripcion       String   @map("descripcion") @db.Text
+  fechaInicio       DateTime @map("fecha_inicio") @db.Date
+  fechaFin          DateTime @map("fecha_fin") @db.Date
+  Ofertas           Oferta[]
+  ofertaIdCompra    BigInt
+  ofertaIdPromocion BigInt
+
+  @@map("promocion")
+}
+
+model Proveedor {
+  nit        BigInt       @id @map("nit")
+  nombre     String       @map("nombre") @db.VarChar(200)
+  contacto   String       @map("contacto") @db.VarChar(200)
+  direccion  String       @map("direccion") @db.VarChar(200)
+  insumo     Insumo[]
+  suministro Suministro[]
+
+  @@map("proveedor")
+}
+
+model Resena {
+  idResena    BigInt    @id @default(autoincrement()) @map("id_resena")
+  comentario  String    @map("comentario") @db.VarChar(255)
+  puntuacion  Decimal   @map("puntuacion") @db.Decimal(2, 1)
+  fechaResena DateTime  @map("fecha_resena") @db.Date
+  idUsuario   String    @map("id_usuario") @db.VarChar(36)
+  idProducto  BigInt    @map("id_producto")
+  usuario     User?     @relation(fields: [idUsuario], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "reseña_ibfk_1")
+  producto    Producto? @relation(fields: [idProducto], references: [idProducto], onDelete: Cascade, onUpdate: NoAction, map: "reseña_ibfk_2")
+
+  @@index([idUsuario], map: "id_usuario")
+  @@index([idProducto], map: "id_producto")
+  @@map("resena")
+}
+
+model Sucursal {
+  direccion         String           @id @map("direccion") @db.VarChar(200)
+  nombre            String           @map("nombre") @db.VarChar(200)
+  telefono          BigInt           @map("telefono")
+  idCiudad          Int?             @map("id_ciudad")
+  idSucursalVirtual BigInt?          @map("id_sucursal_virtual")
+  empleado          Empleado[]
+  ciudad            Ciudad?          @relation(fields: [idCiudad], references: [codigoPostal], onDelete: Cascade, onUpdate: NoAction, map: "sucursal_ibfk_1")
+  sucursalVirtual   SucursalVirtual? @relation(fields: [idSucursalVirtual], references: [idSucursalVirtual], onDelete: Cascade, onUpdate: NoAction, map: "sucursal_ibfk_2")
+  suministro        Suministro[]
+
+  @@index([idCiudad], map: "id_ciudad")
+  @@index([idSucursalVirtual], map: "id_sucursal_virtual")
+  @@map("sucursal")
+}
+
+model SucursalVirtual {
+  idSucursalVirtual BigInt       @id @default(autoincrement()) @map("id_sucursal_virtual")
+  nombre            String       @map("nombre") @db.VarChar(200)
+  correo            String       @map("correo") @db.VarChar(200)
+  inventario        Inventario[]
+  sucursal          Sucursal[]
+  usuario           User[]
+
+  @@map("sucursal_virtual")
+}
+
+model Suministro {
+  direccion String    @map("direccion") @db.VarChar(200)
+  nit       BigInt    @map("nit")
+  sucursal  Sucursal  @relation(fields: [direccion], references: [direccion], onDelete: Cascade, onUpdate: NoAction, map: "suministro_ibfk_1")
+  proveedor Proveedor @relation(fields: [nit], references: [nit], onDelete: Cascade, onUpdate: NoAction, map: "suministro_ibfk_2")
+
+  @@id([direccion, nit])
+  @@index([nit], map: "nit")
+  @@map("suministro")
+}
+
+model TipoProducto {
+  idTipoProducto BigInt     @id @default(autoincrement()) @map("id_tipo_producto") @db.BigInt()
+  nombre         String?    @map("nombre") @db.VarChar(30)
+  Producto       Producto[]
+
+  @@map("tipo_producto")
+}
+
+model User {
+  id                  String           @id @default(dbgenerated("(uuid())")) @map("id_usuario") @db.VarChar(36)
+  cedula              BigInt           @unique(map: "cedula") @map("cedula")
+  nombre              String           @map("nombre") @db.VarChar(200)
+  apellido            String?          @map("apellido") @db.VarChar(200)
+  telefono            BigInt?          @map("telefono")
+  email               String           @unique(map: "correo") @map("correo") @db.VarChar(200)
+  usuario             String           @unique(map: "usuario") @map("usuario") @db.VarChar(30)
+  role                String           @default(dbgenerated("(_utf8mb4\\'ADMIN\\')")) @map("role") @db.VarChar(20)
+  direccion           String?          @map("direccion") @db.VarChar(200)
+  password            String           @map("contrasena") @db.VarChar(255)
+  idSucursalVirtual   BigInt?          @map("id_sucursal_virtual")
+  accounts            Account[]
+  carritos            Carrito[]
+  citas               Cita[]
+  facturas            Factura[]
+  foros               Foro[]
+  metodosPagos        MetodoPago[]
+  resenas             Resena[]
+  sucursalesVirtuales SucursalVirtual? @relation(fields: [idSucursalVirtual], references: [idSucursalVirtual], onDelete: Cascade, onUpdate: NoAction, map: "usuario_ibfk_1")
+
+  @@index([idSucursalVirtual], map: "id_sucursal_virtual")
+  @@map("usuario")
+}

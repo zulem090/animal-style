@@ -1,0 +1,17 @@
+# Este archivo es para yo decirle a docker como construir la imagen
+# Para correrlo con:
+# docker-compose up -d
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.3.0
+    container_name: animal-style-mysql-container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: sasa
+      MYSQL_DATABASE: animal_style_db
+    volumes:
+      - ./mysql_docker_data:/var/lib/mysql
+    ports:
+      - 3306:3306
