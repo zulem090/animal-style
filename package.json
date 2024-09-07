@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "yarn generate:db-interfaces && next build",
+    "build": "npm run generate:db-interfaces && next build",
     "start": "next start",
     "lint": "next lint",
     "generate:db-interfaces": "prisma generate"
