@@ -1,0 +1,7 @@
+node_modules
+coverage
+.vscode
+dist
+*.json
+docker-compose.yml
+.gitignore
