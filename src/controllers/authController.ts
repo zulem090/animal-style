@@ -12,7 +12,7 @@ export class AuthController {
     return await signInEmailPassword(email, password);
   }
 
-  async loginEmailUser(email?: string, password?: string): Promise<UsuarioDto | null> {
-    return await signInEmailUserPassword(email, password);
+  async loginEmailUser(emailOrUsername?: string, password?: string): Promise<UsuarioDto | null> {
+    return await signInEmailUserPassword(emailOrUsername, password);
   }
 }

@@ -51,8 +51,8 @@ export const ProductTemplateEditor = ({ productId }: Props) => {
 
   const productController = useMemo(() => new ProductController(), []);
 
-  const { marcas, isLoading: loadingMarcas, error: errorMarcas } = useGetMarcas();
-  const { tipoProductos, isLoading: loadingTipoProductos, error: errorTipoProductos } = useGetTipoProductos();
+  const { marcas, isLoading: loadingMarcas } = useGetMarcas();
+  const { tipoProductos, isLoading: loadingTipoProductos } = useGetTipoProductos();
 
   useEffect(() => {
     if (isEditing) {
@@ -139,11 +139,11 @@ export const ProductTemplateEditor = ({ productId }: Props) => {
   };
 
   return (
-    <div className="w-fit mx-auto">
+    <div className="mx-auto w-fit">
       {isLoading ? (
-        <Spinner dog className="h-screen mx-auto size-1/6 -mt-80" />
+        <Spinner data-testid="simbolo-carga-producto-editor" dog className="mx-auto -mt-80 size-1/6 h-screen" />
       ) : (
-        <div className="flex justify-items-center bg-white shadow-md rounded-lg">
+        <div className="flex justify-items-center rounded-lg bg-white shadow-md">
           <div className="w-1/2">
             {
               <Image
@@ -155,7 +155,7 @@ export const ProductTemplateEditor = ({ productId }: Props) => {
               />
             }
           </div>
-          <div className="divide-y divide-dashed divide-vino-700 px-5 pb-5 w-1/2 pt-6">
+          <div className="w-1/2 divide-y divide-dashed divide-vino-700 px-5 pb-5 pt-6">
             <div className="pb-8">
               <span className="text-3xl font-bold text-vino-500">
                 {isEditing ? 'Edición del Producto' : 'Creación del Producto'}
@@ -174,8 +174,9 @@ export const ProductTemplateEditor = ({ productId }: Props) => {
                       <input
                         type="text"
                         id="nombre"
+                        data-testid="nombre-input"
                         name="nombre"
-                        className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-vino-500 required:*"
+                        className="required:* w-full rounded-md border border-gray-300 px-3 py-2 focus:border-vino-500 focus:outline-none"
                         autoComplete="off"
                         onChange={handleChange}
                         value={values.nombre}
@@ -189,7 +190,7 @@ export const ProductTemplateEditor = ({ productId }: Props) => {
                       <textarea
                         id="descripcion"
                         name="descripcion"
-                        className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-vino-500"
+                        className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-vino-500 focus:outline-none"
                         autoComplete="off"
                         onChange={handleChange}
                         value={values.descripcion}
@@ -198,7 +199,7 @@ export const ProductTemplateEditor = ({ productId }: Props) => {
                         {errors.descripcion && touched.descripcion && errors.descripcion}
                       </div>
                     </div>
-                    <div className="flex justify-between mb-2">
+                    <div className="mb-2 flex justify-between">
                       <div className="w-1/3">
                         <label htmlFor="idTipo" className="block text-gray-600">
                           Tipo
@@ -208,7 +209,7 @@ export const ProductTemplateEditor = ({ productId }: Props) => {
                         ) : (
                           <select
                             name="idTipo"
-                            className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-vino-500"
+                            className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-vino-500 focus:outline-none"
                             onChange={handleChange}
                             value={values.idTipo}
                             disabled={loadingTipoProductos}
@@ -231,8 +232,9 @@ export const ProductTemplateEditor = ({ productId }: Props) => {
                         <input
                           type="text"
                           id="precio"
+                          data-testid="precio-input"
                           name="precio"
-                          className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-vino-500"
+                          className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-vino-500 focus:outline-none"
                           autoComplete="off"
                           onChange={(event) => {
                             const value = event.target.value;
@@ -245,7 +247,7 @@ export const ProductTemplateEditor = ({ productId }: Props) => {
                         <div className="text-vino-700">{errors.precio && touched.precio && errors.precio}</div>
                       </div>
                     </div>
-                    <div className="flex justify-between mb-2">
+                    <div className="mb-2 flex justify-between">
                       <div className="w-1/3">
                         <label htmlFor="idMarca" className="block text-gray-600">
                           Marca
@@ -255,7 +257,7 @@ export const ProductTemplateEditor = ({ productId }: Props) => {
                         ) : (
                           <select
                             name="idMarca"
-                            className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-vino-500"
+                            className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-vino-500 focus:outline-none"
                             onChange={handleChange}
                             value={values.idMarca}
                             disabled={loadingMarcas}
@@ -278,8 +280,9 @@ export const ProductTemplateEditor = ({ productId }: Props) => {
                         <input
                           type="text"
                           id="cantidad"
+                          data-testid="cantidad-input"
                           name="cantidad"
-                          className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-vino-500"
+                          className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-vino-500 focus:outline-none"
                           autoComplete="off"
                           onChange={(event) => {
                             const value = event.target.value;
@@ -300,9 +303,10 @@ export const ProductTemplateEditor = ({ productId }: Props) => {
                       <input
                         type="file"
                         id="imagen"
+                        data-testid="subir-imagen-input"
                         name="imagen"
                         accept="image/*"
-                        className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-vino-500"
+                        className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-vino-500 focus:outline-none"
                         autoComplete="off"
                         onChange={onImageChange}
                       />
@@ -313,7 +317,7 @@ export const ProductTemplateEditor = ({ productId }: Props) => {
                     <div id="secondSection" className="flex items-center justify-between py-8">
                       <button
                         type="submit"
-                        className="bg-vino-500 hover:bg-vino-600 text-white font-semibold rounded-md py-2 px-4 w-full disabled:bg-white disabled:hover:bg-white"
+                        className="w-full rounded-md bg-vino-500 px-4 py-2 font-semibold text-white hover:bg-vino-600 disabled:bg-white disabled:hover:bg-white"
                         disabled={isSubmitting}
                       >
                         {isSubmitting && <Spinner />}

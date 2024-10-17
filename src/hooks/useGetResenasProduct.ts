@@ -4,10 +4,10 @@ import { ResenaController } from '@/controllers/resenaController';
 import { ResenaDto } from '@/dto/resena/resenaDto';
 import { useEffect, useMemo, useState } from 'react';
 
-export const usePuntuacionesProducto = (productId: number) => {
+export const useGetResenasProducto = (productId: number) => {
   const resenaController = useMemo(() => new ResenaController(), []);
 
-  const [puntuaciones, setResenas] = useState<ResenaDto | undefined>(undefined);
+  const [resenas, setResenas] = useState<ResenaDto | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -24,5 +24,5 @@ export const usePuntuacionesProducto = (productId: number) => {
       });
   }, [resenaController, productId]);
 
-  return { puntuaciones, isLoading, error };
+  return { resenas, isLoading, error };
 };

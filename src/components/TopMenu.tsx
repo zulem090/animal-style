@@ -64,6 +64,7 @@ export const TopMenu = async () => {
               </button>
 
               <Link
+                data-testid={user ? 'user-link' : 'login-link'}
                 href={'/signin'}
                 className="flex items-center justify-center w-10 h-10 rounded-xl border bg-gray-100 focus:bg-gray-100 active:bg-gray-200"
               >

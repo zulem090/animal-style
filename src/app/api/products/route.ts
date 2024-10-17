@@ -18,7 +18,7 @@ export async function GET(request: Request): Promise<NextResponse<Producto[] | o
   const offset: number = Number(searchParams.get('offset') ?? '0');
   const limit: number = Number(searchParams.get('limit') ?? '10');
 
-  console.log({ offset, limit });
+  // console.log({ offset, limit });
 
   if (isNaN(offset)) {
     return NextResponse.json({ message: 'offset must be a number' }, { status: 400 });

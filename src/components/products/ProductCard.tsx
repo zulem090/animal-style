@@ -144,6 +144,7 @@ export const ProductCard = ({ producto, user }: Props) => {
         {user && user.role === 'ADMIN' && (
           <div>
             <button
+              data-testid='boton-editar'
               className="bg-vino-500 hover:bg-vino-600 text-white font-medium focus:ring-4 focus:ring-blue-300 rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mr-2"
               onClick={handleEdit}
               disabled={loadEdit}
@@ -151,6 +152,7 @@ export const ProductCard = ({ producto, user }: Props) => {
               {loadEdit ? <Spinner className="text-white" /> : <FaRegEdit size={20} />}
             </button>
             <button
+            data-testid='boton-cambiar-estado'
               className={`text-white ${
                 isActivo ? 'bg-blue-400 hover:bg-blue-600' : 'bg-gray-400 hover:bg-gray-600'
               } focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2`}
@@ -160,6 +162,7 @@ export const ProductCard = ({ producto, user }: Props) => {
               {loadStatus ? <Spinner className="text-white" /> : statusIcon}
             </button>
             <button
+            data-testid='boton-eliminar'
               className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
               onClick={handleDeleteProduct}
               disabled={loadDelete}

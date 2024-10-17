@@ -9,7 +9,7 @@ import { User as UserSession } from 'next-auth';
 import prisma from '@/orm/prisma';
 import { Prisma, Producto } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
-import { RedirectType, redirect } from 'next/navigation';
+import { redirect } from 'next/navigation';
 import * as yup from 'yup';
 
 const productoCreateSchema: yup.Schema = yup.object({
@@ -39,7 +39,7 @@ const getProduct = async (idProducto: number): Promise<Producto> => {
     include: { tipo: true, marca: true },
   });
 
-  if (!producto) throw new Error(`No producto with id ${idProducto} found`);
+  if (!producto) throw new Error(`No product with id ${idProducto} found`);
 
   return producto;
 };

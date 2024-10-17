@@ -2,7 +2,7 @@
 
 import { CiSearch } from 'react-icons/ci';
 import { Spinner } from '../loaders';
-import React, { FocusEvent, MouseEvent, useEffect, useMemo, useState } from 'react';
+import React, { FocusEvent, MouseEvent, useMemo, useState } from 'react';
 import { Formik, FormikHelpers } from 'formik';
 import { useRouter, useSearchParams } from 'next/navigation';
 
@@ -142,42 +142,43 @@ export const SearchProduct = () => {
 
   return (
     <>
-      <div hidden className="md:block mr-2">
+      <div hidden className="mr-2 md:block">
         <Formik initialValues={initialValues} onSubmit={handleSearch}>
           {({ values, handleSubmit, setFieldValue, handleChange }) => (
             <form onSubmit={handleSubmit}>
               <div className="relative flex items-center !text-gray-400 focus-within:!text-vino-500">
-                <span className="absolute left-4 h-6 flex items-center pr-3 border-r border-gray-300">
-                  {loading ? <Spinner className="!opacity-50" /> : <CiSearch />}
+                <span className="absolute left-4 flex h-6 items-center border-r border-gray-300 pr-3">
+                  {loading ? (
+                    <Spinner data-testid="simbolo-carga-busqueda-producto" className="!opacity-50" />
+                  ) : (
+                    <CiSearch />
+                  )}
                 </span>
                 <input
                   type="search"
                   name="search"
                   id="products-search"
+                  data-testid="products-search"
                   placeholder="Buscar producto"
-                  className="w-full pl-14 pr-4 py-2.5 rounded-xl text-sm text-gray-600 outline-none border border-gray-300 focus:border-vino-500 transition"
+                  className="w-full rounded-xl border border-gray-300 py-2.5 pl-14 pr-4 text-sm text-gray-600 outline-none transition focus:border-vino-500"
                   value={values.search}
                   onChange={handleChange}
-                  // defaultValue={values.search}
                   onKeyUp={handleKeyUpSearch}
                   onKeyDown={handleKeyDownSearch}
                   onBlur={handleBlurSearch}
                   onFocus={handleFocusSearch}
                 />
               </div>
-              <div hidden className={`bg-white mt-3 fixed ${showPreviewer && ' block'}`}>
+              <div hidden className={`fixed mt-3 bg-white ${showPreviewer && 'block'}`}>
                 <ul
                   id="products-previewer"
-                  className={`flex flex-col justify-stretch w-fit py-2 text-sm text-gray-700 shadow-md rounded divide-y divide-double`}
+                  className={`flex w-fit flex-col justify-stretch divide-y divide-double rounded py-2 text-sm text-gray-700 shadow-md`}
                 >
                   {products.map((product: ProductoDto, index: number) => (
-                    <li
-                      key={index}
-                      tabIndex={index}
-                      // className="border active:border-vino-500 focus-within:border-vino-500 focus-visible:border-vino-500"
-                    >
+                    <li key={index} tabIndex={index}>
                       <button
                         id={`product-preview-${product.idProducto}`}
+                        data-testid={`product-preview-${product.idProducto}`}
                         type="button"
                         className="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-slate-100 focus:bg-slate-100"
                         role="menuitem"
@@ -188,22 +189,22 @@ export const SearchProduct = () => {
                         onBlur={handleBlurSearch}
                         value={product.idProducto}
                       >
-                        <div className="w-full flex justify-start content-between items-center">
+                        <div className="flex w-full content-between items-center justify-start">
                           <Image
-                            className="w-[40px] h-[40px] rounded-full"
+                            className="h-[40px] w-[40px] rounded-full"
                             width={0}
                             height={0}
                             src={product?.imagen || '/images/no-image-found.jpg'}
                             alt="product image"
                           />
-                          <div className="w-full flex justify-between ml-2 gap-4">
+                          <div className="ml-2 flex w-full justify-between gap-4">
                             <div className="flex flex-col justify-start">
                               <div className="flex">
                                 <div className="self-center">{product.nombre}</div>
                               </div>
                               <div className="self-start">${product.precio.toLocaleString()}</div>
                             </div>
-                            <div className="text-left content-center">
+                            <div className="content-center text-left">
                               <div className="text-xs font-extralight">{product.tipo}</div>
                               <div className="text-xs font-extralight">{product.marca}</div>
                             </div>

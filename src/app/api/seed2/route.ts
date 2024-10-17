@@ -63,7 +63,7 @@ export async function GET() {
     data: Array.from({ length: 20 }).map((_, i) => ({ idMarca: i + 1, nombre: faker.commerce.department() })),
   });
 
-  console.log('marcas :>> ', marcas);
+  // console.log('marcas :>> ', marcas);
 
   const tipos = await prisma.tipoProducto.createMany({
     data: Array.from({ length: 20 }).map((_, i) => ({ idTipoProducto: i + 1, nombre: faker.commerce.product() })),
@@ -173,8 +173,8 @@ export async function GET() {
   const users = await prisma.user.findMany({ select: { id: true } });
   const products = await prisma.producto.findMany({ select: { idProducto: true } });
 
-  console.log('users :>> ', users.length);
-  console.log('products :>> ', products.length);
+  // console.log('users :>> ', users.length);
+  // console.log('products :>> ', products.length);
 
   const puntuacionRangeProbability: number[] = [
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1.5, 2, 2.5, 3, 3.5, 3.5, 3.5, 3.5, 4, 4.5, 5, 4, 4.5, 5, 4, 4.5, 5, 4, 4.5, 5, 4, 4.5,
@@ -195,7 +195,7 @@ export async function GET() {
       .flat(),
   });
 
-  console.log('Reseñas creadas :>> ', res);
+  // console.log('Reseñas creadas :>> ', res);
 
   return NextResponse.json({ message: 'Ejecutado' });
 }

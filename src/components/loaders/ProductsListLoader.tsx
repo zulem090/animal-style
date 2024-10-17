@@ -1,7 +1,7 @@
 import React from 'react';
-import ContentLoader from 'react-content-loader';
+import ContentLoader, { IContentLoaderProps } from 'react-content-loader';
 
-export const ProductsListLoader = (props?: object) => (
+export const ProductsListLoader = (props?: Partial<IContentLoaderProps>) => (
   <ContentLoader
     className="w-full h-full"
     speed={2}

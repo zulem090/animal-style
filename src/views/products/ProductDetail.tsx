@@ -41,11 +41,11 @@ export const ProductDetail = ({ productId, user }: Props) => {
   }
 
   return (
-    <div className="w-fit mx-auto">
+    <div className="mx-auto w-fit">
       {isLoading ? (
-        <Spinner dog className="h-screen mx-auto size-1/6 -mt-96" />
+        <Spinner data-testid="simbolo-carga-detalle-producto" dog className="mx-auto -mt-96 size-1/6 h-screen" />
       ) : (
-        <div className="mx-auto md:w-[100%] lg:w-[100%] xl:w-[100%] 2xl:w-[80%] flex flex-wrap justify-items-center bg-white shadow-md rounded-lg">
+        <div className="mx-auto flex flex-wrap justify-items-center rounded-lg bg-white shadow-md md:w-[100%] lg:w-[100%] xl:w-[100%] 2xl:w-[80%]">
           <div className="mx-auto lg:w-1/2">
             <Image
               className="rounded-t-lg p-8"
@@ -55,10 +55,10 @@ export const ProductDetail = ({ productId, user }: Props) => {
               alt="product image"
             />
           </div>
-          <div className="lg:w-1/2 p-8">
+          <div className="p-8 lg:w-1/2">
             <div className="divide-y divide-dashed divide-vino-700">
-              <div className="pb-5 mb-5">
-                <h3 className="text-gray-900 font-semibold text-5xl tracking-tight">
+              <div className="mb-5 pb-5">
+                <h3 className="text-5xl font-semibold tracking-tight text-gray-900">
                   {product?.nombre}
                   {user?.role === 'ADMIN' && (
                     <span className={`ml-2 text-sm ${isActivo ? 'text-blue-400' : 'text-red-400'}`}>
@@ -68,15 +68,15 @@ export const ProductDetail = ({ productId, user }: Props) => {
                 </h3>
                 <ProductRating productId={productId} showPromedio showTotalResenas />
               </div>
-              <div className="flex items-center justify-between py-8 mb-2 gap-4">
+              <div className="mb-2 flex items-center justify-between gap-4 py-8">
                 <div>
                   <span className="text-3xl font-bold text-gray-900">${product?.precio.toLocaleString()}</span>
                 </div>
                 <div className="w-1/2">
                   <form>
-                    <div className="h-fit flex flex-wrap lg:justify-center lg:content-center xl:justify-between xl:content-between gap-2">
+                    <div className="flex h-fit flex-wrap gap-2 lg:content-center lg:justify-center xl:content-between xl:justify-between">
                       <div className="self-end">
-                        <label htmlFor="cantidad" className="block text-gray-600 mb-2">
+                        <label htmlFor="cantidad" className="mb-2 block text-gray-600">
                           Cantidad
                         </label>
                         <input
@@ -85,16 +85,16 @@ export const ProductDetail = ({ productId, user }: Props) => {
                           min={1}
                           max={product?.cantidad}
                           name="cantidad"
-                          className="border border-gray-300 rounded-md py-2 px-2 focus:outline-none focus:border-vino-500"
+                          className="rounded-md border border-gray-300 px-2 py-2 focus:border-vino-500 focus:outline-none"
                           autoComplete="off"
                           defaultValue={1}
                         />
                         {/* <div className="text-vino-700">{errors.cantidad && touched.cantidad && errors.cantidad}</div> */}
                       </div>
-                      <div className="self-end place-self-center sm:mt-10">
+                      <div className="place-self-center self-end sm:mt-10">
                         <button
                           type="button"
-                          className="h-fit text-white bg-vino-500 hover:bg-vino-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center"
+                          className="h-fit rounded-lg bg-vino-500 px-4 py-2.5 text-center text-sm font-medium text-white hover:bg-vino-600 focus:ring-4 focus:ring-blue-300"
                         >
                           Añadir al Carrito
                         </button>
@@ -104,7 +104,7 @@ export const ProductDetail = ({ productId, user }: Props) => {
                 </div>
               </div>
               <div className="pt-8">
-                <div className="flex justify-evenly my-10">
+                <div className="my-10 flex justify-evenly">
                   <p>
                     <span className="font-bold text-vino-600">Tipo:</span> {product?.tipo}
                   </p>

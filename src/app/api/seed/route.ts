@@ -62,7 +62,7 @@ export async function GET() {
     ],
   });
 
-  console.log('CREANDO PRODUCTOS!');
+  // console.log('CREANDO PRODUCTOS!');
 
   await prisma.producto.createMany({
     data: [
@@ -172,8 +172,8 @@ export async function GET() {
   const users = await prisma.user.findMany({ select: { id: true } });
   const products = await prisma.producto.findMany({ select: { idProducto: true } });
 
-  console.log('users :>> ', users.length);
-  console.log('products :>> ', products.length);
+  // console.log('users :>> ', users.length);
+  // console.log('products :>> ', products.length);
 
   const puntuacionRangeProbabilityZule: number[] = [
     4, 4.5, 5, 4, 4.5, 5, 4, 4.5, 5, 4, 4.5, 5, 4, 4.5, 5, 4, 4.5, 5, 4, 4.5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
@@ -194,7 +194,7 @@ export async function GET() {
       .flat(),
   });
 
-  console.log('Reseñas creadas :>> ', res);
+  // console.log('Reseñas creadas :>> ', res);
 
   return NextResponse.json({ message: 'Ejecutado' });
 }
