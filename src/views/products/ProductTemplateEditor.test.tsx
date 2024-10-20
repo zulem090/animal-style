@@ -42,14 +42,14 @@ describe('ProductTemplateEditor Component', () => {
     jest.clearAllMocks();
   });
 
-  it('renders loading spinner when data is loading', () => {
+  it('renderiza loading spinner cuando data esté loading', () => {
     mockedProductController.prototype.getById = jest.fn().mockResolvedValue(productoMock);
 
     render(<ProductTemplateEditor productId={1} />);
     expect(screen.getByTestId('simbolo-carga-producto-editor')).not.toBeNull();
   });
 
-  it('renders form fields when loading is complete', async () => {
+  it('renderiza form fields cuando loading esté complete', async () => {
     render(<ProductTemplateEditor productId={undefined} />);
 
     await waitFor(() => {
@@ -63,7 +63,7 @@ describe('ProductTemplateEditor Component', () => {
     expect(screen.getByLabelText('Subir Imagen')).not.toBeNull();
   });
 
-  it('displays validation errors when required fields are empty', async () => {
+  it('muestra la validación de errores cuando los campos requeridos están vacíos', async () => {
     render(<ProductTemplateEditor productId={undefined} />);
 
     const submitButton = screen.getByRole('button', { name: /Guardar Producto/i });
@@ -74,7 +74,7 @@ describe('ProductTemplateEditor Component', () => {
     });
   });
 
-  it('displays toast success message after successful product creation', async () => {
+  it('muestra el mensaje del toast exitoso despues de la creación del producto', async () => {
     mockedProductController.prototype.create = jest.fn().mockResolvedValue({});
     render(<ProductTemplateEditor productId={undefined} />);
 
@@ -92,7 +92,7 @@ describe('ProductTemplateEditor Component', () => {
     });
   });
 
-  it('updates the product successfully', async () => {
+  it('actualiza el product exitosamente', async () => {
     mockedProductController.prototype.getById = jest.fn().mockResolvedValue(productoMock);
     mockedProductController.prototype.update = jest.fn().mockResolvedValue({});
 
@@ -112,7 +112,7 @@ describe('ProductTemplateEditor Component', () => {
     });
   });
 
-  it('changes the image preview when a new image is selected', async () => {
+  it('cambia la preview de la imagen cuando a una imagen está seleccionada', async () => {
     render(<ProductTemplateEditor productId={undefined} />);
 
     const imageInput = screen.getByLabelText('Subir Imagen');

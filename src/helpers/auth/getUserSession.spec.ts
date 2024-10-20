@@ -24,14 +24,14 @@ jest.mock('@/mappers/ToUsuarioDB');
 const mockToUsuarioDB = toUsuarioDB as jest.MockedFunction<typeof toUsuarioDB>;
 
 describe('getAuthOptions', () => {
-  it('should return the correct AuthOptions', async () => {
+  it('debe retornar AuthOptions correctamente', async () => {
     const mockUserDB: User = {
       id: '1',
       nombre: 'John Doe',
       email: 'john.doe@example.com',
       password: 'hashedPassword',
       role: 'USER',
-    };
+    } as User;
 
     mockToUsuarioDB.mockReturnValue(mockUserDB);
     prismaMock.user.findUnique.mockResolvedValue(mockUserDB);
@@ -51,7 +51,6 @@ describe('getAuthOptions', () => {
     });
     expect(authOptions.secret).toBe(process.env.NEXTAUTH_SECRET);
 
-    // Test the jwt callback
     const jwtCallback = authOptions.callbacks?.jwt;
     const token: JWT = {
       id: '1',
@@ -69,22 +68,21 @@ describe('getAuthOptions', () => {
     expect(newToken?.role).toBe(mockUserDB.role);
     expect(newToken?.nombre).toBe(mockUserDB.nombre);
 
-    // Test the session callback
     const sessionCallback = authOptions.callbacks?.session;
     const session = { user: {} } as Session;
-    const newSession = (await sessionCallback?.({
+    const newSession = await sessionCallback?.({
       session,
       token: newToken,
       user: {} as AdapterUser,
       newSession: undefined,
       trigger: 'update',
-    })!) as Awaitable<Session | DefaultSession>;
-    expect(newSession!.user?.role).toBe(mockUserDB.role);
+    })!;
+    expect(newSession?.user?.role).toBe(mockUserDB.role);
     expect(newSession?.user?.id).toBe(mockUserDB.id);
     expect(newSession?.user?.name).toBe(mockUserDB.nombre);
   });
 
-  it('should return null if user is not found in authorize callback', async () => {
+  it('debe retornar null si el user no se encontró en el callback de authorize', async () => {
     authControllerMock.loginEmailUser.mockResolvedValue(null);
 
     const authOptions = getAuthOptions();
@@ -94,7 +92,7 @@ describe('getAuthOptions', () => {
     expect(user).toBeNull();
   });
 
-  it('should return the original token if user is not found in jwt callback', async () => {
+  it('debe retornar el token original si el usuario no es encontrado en el callback de jwt', async () => {
     prismaMock.user.findUnique.mockResolvedValue(null);
 
     const authOptions = getAuthOptions();

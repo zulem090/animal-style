@@ -50,28 +50,28 @@ describe('ProductsList', () => {
     role: 'USER',
   } as UserSession;
 
-  it('renders a button to create a product if the user is an admin', () => {
+  it('renderiza un botón de crear un producto si el usuario es un admin', () => {
     render(<ProductsList user={mockUserAdmin} products={mockProducts} />);
 
     const createButton = screen.getByRole('button', { name: /crear producto/i });
     expect(createButton).toBeInTheDocument();
   });
 
-  it('does not render a button to create a product if the user is not an admin', () => {
+  it('no renderiza el boton de crear si el usuario no s un admin', () => {
     render(<ProductsList user={mockUserNonAdmin} products={mockProducts} />);
 
     const createButton = screen.queryByRole('button', { name: /crear producto/i });
     expect(createButton).toBeNull();
   });
 
-  it('renders the product cards when products are available', () => {
+  it('renderiza un producto cuando los productos estan disponible', () => {
     render(<ProductsList user={mockUserNonAdmin} products={mockProducts} />);
 
     const productCards = screen.getAllByText(/Un Producto/i);
     expect(productCards.length).toBe(2); // Dado que hay dos productos en la lista
   });
 
-  it('renders a message when no products are available', () => {
+  it('renderiza un mensaje cuando no hay productos disponibles', () => {
     render(<ProductsList user={mockUserNonAdmin} products={[]} />);
 
     const noProductsMessage = screen.getByText(/no hay o no se encontró productos/i);
