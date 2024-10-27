@@ -6,10 +6,10 @@ interface IUser extends DefaultUser {
    * Roles del usuario
    */
   role?: string;
-  apellido?: string;
-  cedula?: number;
-  telefono?: number;
-  direccion?: string;
+  apellido?: string | null;
+  cedula?: number | bigint | null;
+  telefono?: number | bigint | null;
+  direccion?: string | null;
   /**
    * Agregar cualquier otro campo que tu manejas
    */
