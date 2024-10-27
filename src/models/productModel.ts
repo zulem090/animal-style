@@ -99,6 +99,18 @@ export async function getAllProducts(offset: number, limit: number, nombre?: str
 
 export async function createProduct(productDto: CreateProductoDto): Promise<void> {
   try {
+    const sameNameProduct = await prisma.producto.findFirst({
+      where: {
+        nombre: {
+          equals: productDto.nombre,
+        },
+      },
+    });
+
+    if (sameNameProduct) {
+      throw new Error('No se puede crear un producto con un nombre existente');
+    }
+
     const payload = await productoCreateSchema.validate(productDto);
 
     let imageRaw: Buffer | undefined;
@@ -119,7 +131,7 @@ export async function createProduct(productDto: CreateProductoDto): Promise<void
 
     await prisma.producto.create({ data: product });
   } catch (error: any) {
-    throw new Error(error.message);
+    throw error;
   }
 
   redirect('/products');

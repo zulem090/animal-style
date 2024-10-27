@@ -13,20 +13,32 @@ interface MenuItem {
   path: string;
 }
 
-const menuItems: MenuItem[] = [
-  {
-    title: 'Inicio',
-    path: '/',
-  },
-  {
-    title: 'Productos',
-    path: '/products',
-  },
-];
+const generateMenuItems = (user?: User) => {
+  const defaultMenu = [
+    {
+      title: 'Inicio',
+      path: '/',
+    },
+    {
+      title: 'Productos',
+      path: '/products',
+    },
+  ];
+
+  if (user?.id) {
+    defaultMenu.push({
+      title: 'Reservas',
+      path: '/bookings',
+    });
+  }
+
+  return defaultMenu;
+};
 
 export const TopMenu = async () => {
   const cartItemsCount = 0;
   const user: User | undefined = await getUserSession();
+  const menuItems: MenuItem[] = generateMenuItems(user);
 
   return (
     <>
@@ -35,14 +47,14 @@ export const TopMenu = async () => {
           <Link hidden href="/" className="lg:block">
             <Image src="/images/logo/logo.png" alt="Anymal Style" width={120} height={120} />
           </Link>
-          <button className="w-12 h-16 -mr-2 border-r lg:hidden">
+          <button className="-mr-2 h-16 w-12 border-r lg:hidden">
             <CiMenuBurger size={30} />
           </button>
         </div>
-        <div className="col-span-9 sticky z-10 top-0 h-fit border-b lg:mt-2.5 lg:pb-5">
-          <div className="px-6 mt-0 flex items-center justify-between space-x-4">
-            <div className="flex justify-start items-center">
-              <div className="flex justify-start gap-8 ml-12">
+        <div className="sticky top-0 z-10 col-span-9 h-fit border-b lg:mt-2.5 lg:pb-5">
+          <div className="mt-0 flex items-center justify-between space-x-4 px-6">
+            <div className="flex items-center justify-start">
+              <div className="ml-12 flex justify-start gap-8">
                 {menuItems.map((item, index) => (
                   <TopMenuItem key={index} {...item} />
                 ))}
@@ -54,26 +66,26 @@ export const TopMenu = async () => {
 
               <Link
                 href={'#'}
-                className="p-2 flex items-center justify-center h-10 rounded-xl border bg-gray-100 focus:bg-gray-100 active:bg-gray-200"
+                className="flex h-10 items-center justify-center rounded-xl border bg-gray-100 p-2 focus:bg-gray-100 active:bg-gray-200"
               >
-                {cartItemsCount > 0 && <span className="text-sm mr-2 text-blue-600 font-bold">{cartItemsCount}</span>}
+                {cartItemsCount > 0 && <span className="mr-2 text-sm font-bold text-blue-600">{cartItemsCount}</span>}
                 <CiShoppingBasket size={25} />
               </Link>
-              <button className="flex items-center justify-center w-10 h-10 rounded-xl border bg-gray-100 focus:bg-gray-100 active:bg-gray-200">
+              <button className="flex h-10 w-10 items-center justify-center rounded-xl border bg-gray-100 focus:bg-gray-100 active:bg-gray-200">
                 <CiBellOn size={25} />
               </button>
 
               <Link
                 data-testid={user ? 'user-link' : 'login-link'}
                 href={'/signin'}
-                className="flex items-center justify-center w-10 h-10 rounded-xl border bg-gray-100 focus:bg-gray-100 active:bg-gray-200"
+                className="flex h-10 w-10 items-center justify-center rounded-xl border bg-gray-100 focus:bg-gray-100 active:bg-gray-200"
               >
                 {user ? <FiUserCheck size={25} /> : <CiLogin size={25} />}
               </Link>
               <div className="ml-2">
                 <p>
                   {user && `Hola ${user.name || 'Usuario'}!`}
-                  <span className="text-vino-700 font-bold text-xs ml-1">{user?.role}</span>
+                  <span className="ml-1 text-xs font-bold text-vino-700">{user?.role}</span>
                 </p>
                 <p>{user && <LogoutButton />}</p>
               </div>

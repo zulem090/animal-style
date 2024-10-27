@@ -125,7 +125,7 @@ export const ProductTemplateEditor = ({ productId }: Props) => {
       }
     } catch (error: any) {
       toast.remove('save');
-      toast.error('Error desconocido al intentar guardar, inténtalo nuevamente.', { duration: 4000 });
+      toast.error(error.message, { duration: 4000 });
       console.error(error.message);
     }
   };
@@ -240,7 +240,7 @@ export const ProductTemplateEditor = ({ productId }: Props) => {
                             const value = event.target.value;
                             const number = value.replace(/\$|,|\./g, '');
 
-                            setFieldValue('precio', parseInt(number));
+                            setFieldValue('precio', parseInt(number || '0'));
                           }}
                           value={Dinero({ amount: Number(values.precio || 0), precision: 0 }).toFormat('$0,0')}
                         />
@@ -288,7 +288,7 @@ export const ProductTemplateEditor = ({ productId }: Props) => {
                             const value = event.target.value;
                             const number = value.replace(/\$|,|\./g, '');
 
-                            setFieldValue('cantidad', parseInt(number));
+                            setFieldValue('cantidad', parseInt(number || '0'));
                           }}
                           value={Dinero({ amount: Number(values.cantidad || 0), precision: 0 }).toFormat('0,0')}
                         />

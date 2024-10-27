@@ -18,8 +18,6 @@ export async function GET(request: Request): Promise<NextResponse<Producto[] | o
   const offset: number = Number(searchParams.get('offset') ?? '0');
   const limit: number = Number(searchParams.get('limit') ?? '10');
 
-  // console.log({ offset, limit });
-
   if (isNaN(offset)) {
     return NextResponse.json({ message: 'offset must be a number' }, { status: 400 });
   }
@@ -28,9 +26,9 @@ export async function GET(request: Request): Promise<NextResponse<Producto[] | o
     return NextResponse.json({ message: 'limit must be a number' }, { status: 400 });
   }
 
-  const todos: Producto[] = await prisma.producto.findMany({ skip: offset, take: limit });
+  const productos: Producto[] = await prisma.producto.findMany({ skip: offset, take: limit });
 
-  return NextResponse.json<Producto[]>(todos);
+  return NextResponse.json<Producto[]>(productos);
 }
 
 export async function POST(request: Request): Promise<NextResponse<Producto>> {
@@ -47,9 +45,9 @@ export async function POST(request: Request): Promise<NextResponse<Producto>> {
       marca: { connect: { idMarca: BigInt(payload.idMarca!) } },
     };
 
-    const todo: Producto = await prisma.producto.create({ data: dto });
+    const producto: Producto = await prisma.producto.create({ data: dto });
 
-    return NextResponse.json<Producto>(todo);
+    return NextResponse.json<Producto>(producto);
   } catch (error: any) {
     return NextResponse.json({ message: error.message }, { status: 400 }) as unknown as Promise<NextResponse<Producto>>;
   }

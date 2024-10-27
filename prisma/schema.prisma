@@ -39,9 +39,12 @@ model Carrito {
 }
 
 model Cita {
-  idCita        BigInt    @id @default(autoincrement())
+  idCita        BigInt    @id @default(autoincrement()) @map("id_cita")
   fechaHoraCita DateTime  @map("fecha_hora_cita") @db.DateTime(0)
   estado        String    @db.VarChar(30)
+  nombreMascota String    @map("nombre_mascota") @db.VarChar(30)
+  tipoMascota   String    @map("tipo_mascota") @db.VarChar(30)
+  tipoCita      String    @map("tipo_cita") @db.VarChar(255)
   observaciones String    @db.VarChar(255)
   idUsuario     String?   @map("id_usuario") @db.VarChar(36)
   idPaciente    BigInt?   @map("id_paciente")

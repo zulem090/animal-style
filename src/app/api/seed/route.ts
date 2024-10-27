@@ -169,7 +169,7 @@ export async function GET() {
   await signUpUser(userAdmin, false);
   await signUpUser(user, false);
 
-  const users = await prisma.user.findMany({ select: { id: true } });
+  const users = await prisma.user.findMany({ select: { id: true, email: true } });
   const products = await prisma.producto.findMany({ select: { idProducto: true } });
 
   // console.log('users :>> ', users.length);
@@ -192,6 +192,79 @@ export async function GET() {
         })),
       )
       .flat(),
+  });
+
+  const firstUserId = users.find((user) => user.email === '1@m.com')?.id;
+
+  await prisma.cita.create({
+    data: {
+      tipoCita: 'Spa',
+      nombreMascota: 'Tommy',
+      tipoMascota: 'Canino',
+      estado: 'ACTIVO',
+      observaciones: '',
+      fechaHoraCita: faker.date.between({
+        from: new Date(),
+        to: new Date(new Date().setDate(new Date().getDate() + 30)),
+      }),
+      usuario: { connect: { id: firstUserId } },
+    },
+  });
+  await prisma.cita.create({
+    data: {
+      tipoCita: 'Adiestramiento',
+      nombreMascota: 'Morty',
+      tipoMascota: 'Felino',
+      estado: 'ACTIVO',
+      observaciones: '',
+      fechaHoraCita: faker.date.between({
+        from: new Date(),
+        to: new Date(new Date().setDate(new Date().getDate() + 30)),
+      }),
+      usuario: { connect: { id: firstUserId } },
+    },
+  });
+  await prisma.cita.create({
+    data: {
+      tipoCita: 'Fisioterapia',
+      nombreMascota: 'Copito',
+      tipoMascota: 'Felino',
+      estado: 'ACTIVO',
+      observaciones: '',
+      fechaHoraCita: faker.date.between({
+        from: new Date(),
+        to: new Date(new Date().setDate(new Date().getDate() + 30)),
+      }),
+      usuario: { connect: { id: firstUserId } },
+    },
+  });
+  await prisma.cita.create({
+    data: {
+      tipoCita: 'Veterinaria',
+      nombreMascota: 'Maxi',
+      tipoMascota: 'Canino',
+      estado: 'ACTIVO',
+      observaciones: '',
+      fechaHoraCita: faker.date.between({
+        from: new Date(),
+        to: new Date(new Date().setDate(new Date().getDate() + 30)),
+      }),
+      usuario: { connect: { id: firstUserId } },
+    },
+  });
+  await prisma.cita.create({
+    data: {
+      tipoCita: 'Psicologia',
+      nombreMascota: 'Rex',
+      tipoMascota: 'Canino',
+      estado: 'ACTIVO',
+      observaciones: '',
+      fechaHoraCita: faker.date.between({
+        from: new Date(),
+        to: new Date(new Date().setDate(new Date().getDate() + 30)),
+      }),
+      usuario: { connect: { id: firstUserId } },
+    },
   });
 
   // console.log('Reseñas creadas :>> ', res);

@@ -19,7 +19,7 @@ const formValidations = yup.object({
   telefono: yup.number().optional().min(1, 'Unidades mínima: 1'),
   email: yup.string().email('debe ser un correo váldio').required(requiredMessage),
   usuario: yup.string().required(requiredMessage),
-  password: yup.string().required(requiredMessage),
+  password: yup.string().required(requiredMessage).length(6, 'Contraseña debe de tener mínimo 6 caracteres'),
 });
 
 export const SignUp = () => {

@@ -45,6 +45,10 @@ export const getAuthOptions = (): AuthOptions => ({
       token.id = dbUser.id;
       token.role = dbUser?.role ?? 'USER';
       token.nombre = dbUser.nombre;
+      token.apellido = dbUser.apellido ?? '';
+      token.cedula = Number(dbUser.cedula);
+      token.direccion = dbUser.direccion ?? '';
+      token.telefono = Number(dbUser.telefono);
 
       return token;
     },
@@ -53,6 +57,10 @@ export const getAuthOptions = (): AuthOptions => ({
         session.user.role = token.role;
         session.user.id = token.id;
         session.user.name = token.nombre as string;
+        session.user.apellido = token.apellido as string;
+        session.user.cedula = token.cedula;
+        session.user.telefono = token.telefono;
+        session.user.direccion = token.direccion;
       }
 
       return session;

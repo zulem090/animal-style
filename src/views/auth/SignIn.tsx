@@ -51,22 +51,22 @@ export const SignIn = () => {
   };
 
   return (
-    <div className="bg-slate-100 flex justify-center items-center h-100">
+    <div className="h-100 flex items-center justify-center bg-slate-100">
       {/* <!-- Left: Image --> */}
-      <div className="w-1/2 h-screen hidden lg:block">
+      <div className="hidden h-screen w-1/2 lg:block">
         <Image
           src="/images/login.svg"
           width={800}
           height={800}
           alt="Placeholder Image"
-          className="object-cover w-full h-full"
+          className="h-full w-full object-cover"
         />
       </div>
       {/* <!-- Right: Login Form --> */}
-      <div className="lg:p-0 xl:p-15 2xl:p-36 p-8 w-full lg:w-1/2 flex justify-center items-center">
+      <div className="xl:p-15 flex w-full items-center justify-center p-8 lg:w-1/2 lg:p-0 2xl:p-36">
         <div className="w-1/2">
           <div className="text-center">
-            <h1 className="text-2xl font-semibold mb-8">Inicio de Sesión</h1>
+            <h1 className="mb-8 text-2xl font-semibold">Inicio de Sesión</h1>
           </div>
           <Formik initialValues={initialValues} validationSchema={formValidations} onSubmit={onSubmit}>
             {({ values, errors, touched, handleSubmit, handleChange, isSubmitting }) => (
@@ -80,7 +80,7 @@ export const SignIn = () => {
                     type="text"
                     id="email"
                     name="email"
-                    className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-vino-500"
+                    className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-vino-500 focus:outline-none"
                     autoComplete="off"
                     onChange={handleChange}
                     value={values.email}
@@ -96,7 +96,7 @@ export const SignIn = () => {
                     type="password"
                     id="password"
                     name="password"
-                    className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-vino-500"
+                    className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-vino-500 focus:outline-none"
                     autoComplete="off"
                     onChange={handleChange}
                     value={values.password}
@@ -106,7 +106,7 @@ export const SignIn = () => {
                 {/* <!-- Remember Me Checkbox --> */}
                 <div className="mb-4 flex items-center">
                   <input type="checkbox" id="remember" name="remember" className="text-vino-500" />
-                  <label htmlFor="remember" className="text-gray-600 ml-2">
+                  <label htmlFor="remember" className="ml-2 text-gray-600">
                     Recuérdame
                   </label>
                 </div>
@@ -119,7 +119,7 @@ export const SignIn = () => {
                 {/* <!-- Login Button --> */}
                 <button
                   type="submit"
-                  className=" bg-vino-500 hover:bg-vino-600 text-white font-semibold rounded-md py-2 px-4 w-full disabled:bg-slate-100 disabled:hover:bg-slate-100"
+                  className="w-full rounded-md bg-vino-500 px-4 py-2 font-semibold text-white hover:bg-vino-600 disabled:bg-slate-100 disabled:hover:bg-slate-100"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? <Spinner size={40} /> : 'Ingresar'}
@@ -128,7 +128,7 @@ export const SignIn = () => {
             )}
           </Formik>
           {/* <!-- Sign up  Link --> */}
-          <div className="mt-6 text-vino-500 text-center">
+          <div className="mt-6 text-center text-vino-500">
             <Link href="/signup" className="hover:underline">
               Regístrate Aquí
             </Link>

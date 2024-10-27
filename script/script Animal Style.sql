@@ -77,7 +77,10 @@ CREATE TABLE cita(
 id_cita BIGINT AUTO_INCREMENT PRIMARY KEY,
 fecha_hora_cita DATETIME NOT NULL,
 estado VARCHAR(30) NOT NULL,
-observaciones VARCHAR(255) NOT NULL);
+nombre_mascota VARCHAR(30) NOT NULL,
+tipo_mascota VARCHAR(30) NOT NULL,
+tipo_cita VARCHAR(255) NOT NULL,
+observaciones VARCHAR(255));
 
 CREATE TABLE paciente(
 id_paciente BIGINT AUTO_INCREMENT PRIMARY KEY,
