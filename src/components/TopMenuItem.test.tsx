@@ -32,7 +32,7 @@ describe('TopMenuItem', () => {
     expect(linkElement).toBeInTheDocument();
 
     // Verifica que se aplica la clase "text-blue-600" cuando la ruta coincide
-    expect(linkElement).toHaveClass('text-blue-600');
+    expect(linkElement).toHaveClass('text-vino-600 font-semibold text-lg');
   });
 
   it('debería aplicar la clase "text-black" cuando la ruta no coincide', () => {

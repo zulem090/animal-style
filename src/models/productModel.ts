@@ -131,7 +131,7 @@ export async function createProduct(productDto: CreateProductoDto): Promise<void
 
     await prisma.producto.create({ data: product });
   } catch (error: any) {
-    throw error;
+    throw new Error(error.message);
   }
 
   redirect('/products');

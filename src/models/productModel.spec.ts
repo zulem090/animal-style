@@ -194,6 +194,7 @@ describe('Product Model', () => {
       beforeEach(() => {
         jest.clearAllMocks();
         mockYup.mockReturnValueOnce(productMock1);
+        prismaMock.producto.findFirst.mockResolvedValueOnce(null);
         prismaMock.producto.create.mockResolvedValueOnce(productMock1);
       });
 
@@ -231,10 +232,18 @@ describe('Product Model', () => {
       beforeEach(() => {
         jest.clearAllMocks();
         mockYup.mockReturnValueOnce(productMock1);
-        prismaMock.producto.create.mockRejectedValueOnce({ message: 'Error al intentar guardar' });
       });
 
       it('debería lanzar un error al intentar guardar', () => {
+        prismaMock.producto.findFirst.mockResolvedValueOnce(productMock1);
+        expect(() => createProduct(productMock1 as unknown as CreateProductoDto)).rejects.toThrow(
+          new Error('No se puede crear un producto con un nombre existente'),
+        );
+      });
+
+      it('debería lanzar un error general si intentar guardar un producto', () => {
+        prismaMock.producto.findFirst.mockResolvedValueOnce(null);
+        prismaMock.producto.create.mockRejectedValueOnce({ message: 'Error al intentar guardar' });
         expect(() => createProduct(productMock1 as unknown as CreateProductoDto)).rejects.toThrow(
           new Error('Error al intentar guardar'),
         );
