@@ -392,7 +392,7 @@ export const BookingTemplateEditor = ({ bookingId, user, readOnly }: Props) => {
                     className="w-full rounded-md bg-vino-500 px-4 py-2 font-semibold text-white hover:bg-vino-600 disabled:bg-slate-100 disabled:hover:bg-slate-100"
                     disabled={isSubmitting}
                   >
-                    {isSubmitting ? <Spinner /> : 'Solicitar'}
+                    {isSubmitting ? <Spinner /> : isEditing ? 'Editar Reserva' : 'Solicitar'}
                   </button>
                 )}
               </form>
