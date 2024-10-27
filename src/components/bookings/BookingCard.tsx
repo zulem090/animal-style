@@ -96,7 +96,7 @@ export const BookingCard = ({ booking, user }: Props) => {
               </p>
               <p className="mb-6 text-base text-slate-600">
                 <span className="font-bold">Hora: </span>
-                {booking.fechaHoraCita.toLocaleTimeString().replace(':00', '')}
+                {booking.fechaHoraCita.toLocaleTimeString().replace(/:\d{2}(?=\s?[ap]\.?\s?m\.?)/i, '')}
               </p>
             </div>
           </div>
