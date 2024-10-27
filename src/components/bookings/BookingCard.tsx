@@ -85,10 +85,13 @@ export const BookingCard = ({ booking, user }: Props) => {
           <div className="flex min-h-20 w-full flex-wrap">
             <div className="w-full self-end">
               <p className="text-base text-slate-600">
-                <span className="font-bold">Mascota:</span> {titleFormat(booking.nombreMascota)} ({booking.tipoMascota})
+                <span className="font-bold">Mascota:</span> {titleFormat(booking.nombreMascota)}
               </p>
               <p className="mb-6 text-base text-slate-600">
-                <span className="font-bold">Tipo de Mascota:</span> {booking.tipoCita}
+                <span className="font-bold">Tipo de Mascota:</span> {booking.tipoMascota}
+              </p>
+              <p className="mb-6 text-base text-slate-600">
+                <span className="font-bold">Tipo de Reserva:</span> {booking.tipoCita}
               </p>
               <p className="text-base text-slate-600">
                 <span className="font-bold">Fecha: </span>
