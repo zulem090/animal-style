@@ -87,7 +87,7 @@ export const BookingCard = ({ booking, user }: Props) => {
               <p className="text-base text-slate-600">
                 <span className="font-bold">Mascota:</span> {titleFormat(booking.nombreMascota)}
               </p>
-              <p className="mb-6 text-base text-slate-600">
+              <p className="text-base text-slate-600">
                 <span className="font-bold">Tipo de Mascota:</span> {booking.tipoMascota}
               </p>
               <p className="mb-6 text-base text-slate-600">
