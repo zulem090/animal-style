@@ -13,7 +13,7 @@ export const BookingsList = ({ user, bookings }: Props) => {
     <div className="mx-auto h-fit w-fit">
       <span className="text-4xl font-bold text-vino-500">Reservas</span>
       <div className="mb-4 flex justify-end">
-        {user && user.role === 'ADMIN' && (
+        {user && (
           <Link href="/bookings/new">
             <button className="w-50 rounded-md bg-vino-500 px-4 py-2 font-semibold text-white hover:bg-vino-600">
               Crear Reserva

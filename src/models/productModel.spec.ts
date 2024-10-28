@@ -234,7 +234,7 @@ describe('Product Model', () => {
         mockYup.mockReturnValueOnce(productMock1);
       });
 
-      it('debería lanzar un error al intentar guardar', () => {
+      it('debería lanzar un error al guardar un producto con nombre existente', () => {
         prismaMock.producto.findFirst.mockResolvedValueOnce(productMock1);
         expect(() => createProduct(productMock1 as unknown as CreateProductoDto)).rejects.toThrow(
           new Error('No se puede crear un producto con un nombre existente'),

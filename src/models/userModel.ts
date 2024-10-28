@@ -21,7 +21,10 @@ export async function updatePersonalInfo({ direccion, telefono }: Pick<User, 'di
 
     const currentUserInfo = await verifyUser(session?.id);
 
-    if (currentUserInfo.direccion === direccion && Number(currentUserInfo.telefono) === Number(telefono)) {
+    if (
+      (!direccion && !telefono) ||
+      (currentUserInfo.direccion === direccion && Number(currentUserInfo.telefono) === Number(telefono))
+    ) {
       return;
     }
 

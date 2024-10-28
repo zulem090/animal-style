@@ -150,7 +150,7 @@ export const BookingTemplateEditor = ({ bookingId, user, readOnly }: Props) => {
   };
 
   if (isLoading) {
-    return <Spinner data-testid="simbolo-carga-detalle-producto" dog className="mx-auto -mt-96 size-1/6 h-screen" />;
+    return <Spinner data-testid="simbolo-carga-reserva-editor" dog className="mx-auto -mt-96 size-1/6 h-screen" />;
   }
 
   if (!isLoading && isEditing && booking?.idUsuario !== user.id) {
@@ -179,6 +179,7 @@ export const BookingTemplateEditor = ({ bookingId, user, readOnly }: Props) => {
                     <input
                       type="text"
                       id="nombre"
+                      data-testid="nombre-input"
                       name="nombre"
                       className="w-full cursor-not-allowed rounded-md border border-gray-300 px-3 py-2 focus:border-vino-500 focus:outline-none"
                       autoComplete="off"
@@ -260,6 +261,7 @@ export const BookingTemplateEditor = ({ bookingId, user, readOnly }: Props) => {
                   </label>
                   <select
                     name="tipoReserva"
+                    data-testid="tipo-reserva-input"
                     className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-vino-500 focus:outline-none"
                     onChange={handleChange}
                     value={values.tipoReserva}
@@ -300,6 +302,7 @@ export const BookingTemplateEditor = ({ bookingId, user, readOnly }: Props) => {
                   <input
                     type="number"
                     id="telefono"
+                    data-testid="telefono-input"
                     name="telefono"
                     className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-vino-500 focus:outline-none"
                     autoComplete="off"
@@ -335,6 +338,7 @@ export const BookingTemplateEditor = ({ bookingId, user, readOnly }: Props) => {
                   <input
                     type="text"
                     id="nombreMascota"
+                    data-testid="nombre-mascota-input"
                     name="nombreMascota"
                     className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-vino-500 focus:outline-none"
                     autoComplete="off"
@@ -354,6 +358,7 @@ export const BookingTemplateEditor = ({ bookingId, user, readOnly }: Props) => {
                   </label>
                   <select
                     name="tipoMascota"
+                    data-testid="tipo-mascota-input"
                     className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-vino-500 focus:outline-none"
                     onChange={handleChange}
                     value={values.tipoMascota}
@@ -374,6 +379,7 @@ export const BookingTemplateEditor = ({ bookingId, user, readOnly }: Props) => {
                   <input
                     type="datetime-local"
                     id="fechaHoraReserva"
+                    data-testid="fecha-hora-input"
                     name="fechaHoraReserva"
                     className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-vino-500 focus:outline-none"
                     autoComplete="off"
