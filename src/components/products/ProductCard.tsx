@@ -88,20 +88,20 @@ export const ProductCard = ({ producto, user }: Props) => {
   };
 
   return (
-    <div className="flex flex-wrap justify-between rounded-lg border p-4 max-w-sm shadow-md">
+    <div className="flex max-w-sm flex-wrap justify-between rounded-lg border p-4 shadow-md">
       <div className="flex flex-wrap content-start">
-        <div className="w-full h-fit">
+        <div className="h-fit w-full">
           <Image
             src={producto.imagen || '/images/no-image-found.jpg'}
             alt={producto.nombre}
-            className="w-full h-48 rounded-md object-cover"
+            className="h-48 w-full rounded-md object-cover"
             height={100}
             width={100}
           />
         </div>
-        <div className="flex flex-wrap justify-between w-full px-1 py-4">
+        <div className="flex w-full flex-wrap justify-between px-1 py-4">
           <div>
-            <div className="text-vino-500 font-bold text-xl mb-2">
+            <div className="mb-2 text-xl font-bold text-vino-500">
               <p>
                 {producto.nombre}
                 {user?.role === 'ADMIN' && (
@@ -113,7 +113,7 @@ export const ProductCard = ({ producto, user }: Props) => {
             </div>
             <ProductRating productId={producto.idProducto} />
             <div className="w-full">
-              <p className=" text-slate-600 text-base mb-8 min-h-[120px]">
+              <p className="mb-8 min-h-[120px] text-base text-slate-600">
                 {producto.descripcion?.length! > 150
                   ? `${producto.descripcion?.substring(0, 150)}...`
                   : producto.descripcion}
@@ -121,21 +121,21 @@ export const ProductCard = ({ producto, user }: Props) => {
             </div>
           </div>
 
-          <div className="flex flex-wrap w-full min-h-20">
-            <div className="self-end w-full">
-              <p className="text-slate-600 text-base">
+          <div className="flex min-h-20 w-full flex-wrap">
+            <div className="w-full self-end">
+              <p className="text-base text-slate-600">
                 <span className="font-bold">Tipo:</span> {producto.tipo}
               </p>
-              <p className="text-slate-600 text-base mb-6">
+              <p className="mb-6 text-base text-slate-600">
                 <span className="font-bold">Marca:</span> {producto.marca}
               </p>
-              <p className="text-vino-700 text-base font-bold">$ {producto.precio.toLocaleString()}</p>
-              <p className="text-slate-600 text-base">En stock: {producto.cantidad.toLocaleString()}</p>
+              <p className="text-base font-bold text-vino-700">$ {producto.precio.toLocaleString()}</p>
+              <p className="text-base text-slate-600">En stock: {producto.cantidad.toLocaleString()}</p>
             </div>
           </div>
         </div>
       </div>
-      <div className="self-end flex justify-between w-full px-1 py-4">
+      <div className="flex w-full justify-between self-end px-1 py-4">
         <div className="self-center">
           <Link href={`/products/${producto.idProducto}`} className="text-vino-500 hover:text-vino-700 hover:underline">
             Leer más
@@ -144,26 +144,26 @@ export const ProductCard = ({ producto, user }: Props) => {
         {user && user.role === 'ADMIN' && (
           <div>
             <button
-              data-testid='boton-editar'
-              className="bg-vino-500 hover:bg-vino-600 text-white font-medium focus:ring-4 focus:ring-blue-300 rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mr-2"
+              data-testid="boton-editar"
+              className="mr-2 rounded-lg bg-vino-500 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-vino-600 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               onClick={handleEdit}
               disabled={loadEdit}
             >
               {loadEdit ? <Spinner className="text-white" /> : <FaRegEdit size={20} />}
             </button>
             <button
-            data-testid='boton-cambiar-estado'
+              data-testid="boton-cambiar-estado"
               className={`text-white ${
                 isActivo ? 'bg-blue-400 hover:bg-blue-600' : 'bg-gray-400 hover:bg-gray-600'
-              } focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2`}
+              } mr-2 rounded-lg px-5 py-2.5 text-center text-sm font-medium focus:ring-4 focus:ring-blue-300`}
               onClick={isActivo ? handleInactiveProduct : handleActiveProduct}
               disabled={loadStatus}
             >
               {loadStatus ? <Spinner className="text-white" /> : statusIcon}
             </button>
             <button
-            data-testid='boton-eliminar'
-              className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+              data-testid="boton-eliminar"
+              className="rounded-lg bg-red-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:ring-4 focus:ring-blue-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
               onClick={handleDeleteProduct}
               disabled={loadDelete}
             >

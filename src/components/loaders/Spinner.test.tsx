@@ -34,7 +34,7 @@ describe('Spinner Component', () => {
         size: 25,
         className: expect.stringContaining('custom-class'),
       }),
-      {}
+      {},
     );
   });
 
@@ -46,7 +46,7 @@ describe('Spinner Component', () => {
         size: 25,
         className: expect.stringContaining('custom-class'),
       }),
-      {}
+      {},
     );
   });
 });

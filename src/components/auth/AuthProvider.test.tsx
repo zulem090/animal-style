@@ -11,7 +11,7 @@ describe('AuthProvider', () => {
     render(
       <AuthProvider>
         <div>Test Child</div>
-      </AuthProvider>
+      </AuthProvider>,
     );
 
     const childElement = screen.getByText(/Test Child/i);
@@ -22,7 +22,7 @@ describe('AuthProvider', () => {
     render(
       <AuthProvider>
         <div>Test Child</div>
-      </AuthProvider>
+      </AuthProvider>,
     );
 
     expect(SessionProvider).toHaveBeenCalled();

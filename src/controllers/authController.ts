@@ -5,7 +5,7 @@ import { signInEmailPassword, signInEmailUserPassword, signUpUser } from '@/mode
 
 export class AuthController {
   async createUser(usuario: CreateUsuarioDto, redirection?: boolean): Promise<CreateUsuarioResponse> {
-    return await signUpUser(usuario, redirection) as CreateUsuarioResponse;
+    return (await signUpUser(usuario, redirection)) as CreateUsuarioResponse;
   }
 
   async login(email?: string, password?: string): Promise<UsuarioDto | null> {

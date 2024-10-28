@@ -3,7 +3,6 @@ import { User as UserSession } from 'next-auth';
 import { BookingsList } from './BookingsList';
 import { BookingDto } from '@/dto/booking/bookingDto';
 
-
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
 }));

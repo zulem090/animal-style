@@ -3,7 +3,7 @@ import ContentLoader, { IContentLoaderProps } from 'react-content-loader';
 
 export const ProductsListLoader = (props?: Partial<IContentLoaderProps>) => (
   <ContentLoader
-    className="w-full h-full"
+    className="h-full w-full"
     speed={2}
     width={800}
     height={575}

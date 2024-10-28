@@ -1,4 +1,4 @@
 export interface ResenaDto {
-    puntuacionPromedio: number;
-    numeroResenas: number;
+  puntuacionPromedio: number;
+  numeroResenas: number;
 }

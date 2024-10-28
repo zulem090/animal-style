@@ -15,7 +15,7 @@ export const TopMenuItem = ({ title, path }: Props) => {
     <>
       <div>
         <Link href={path}>
-          <p className={`${pathName === path ? 'text-vino-600 font-semibold' : 'text-black '} text-lg`}>{title}</p>
+          <p className={`${pathName === path ? 'font-semibold text-vino-600' : 'text-black'} text-lg`}>{title}</p>
         </Link>
       </div>
     </>
