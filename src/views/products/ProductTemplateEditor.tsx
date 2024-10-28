@@ -33,8 +33,12 @@ const requiredMessage = 'este campo es requerido';
 
 const formValidations = yup.object({
   nombre: yup.string().required(requiredMessage),
-  precio: yup.number().required(requiredMessage).min(1, 'Precio mínimo: 500'),
-  cantidad: yup.number().required(requiredMessage).min(1, 'Unidades mínima: 1'),
+  precio: yup
+    .number()
+    .required(requiredMessage)
+    .min(1, 'Precio mínimo: $500')
+    .max(1000000, 'Precio máximo: $1.000.000'),
+  cantidad: yup.number().required(requiredMessage).min(1, 'Unidades mínima: 1').max(10000, 'Unidades máxima: 10.000'),
   descripcion: yup.string().optional().max(1000, 'Descripción de máximo 1000 caracteres'),
   idTipo: yup.number().optional(),
   idMarca: yup.number().optional(),
