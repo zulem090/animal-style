@@ -7,7 +7,7 @@ export const toUsuarioDB = (usuario: UsuarioDto): UsuarioDb => ({
   apellido: usuario?.apellido,
   cedula: BigInt(usuario.cedula),
   email: usuario.email,
-  role: 'ADMIN',
+  role: 'USER',
   direccion: usuario.direccion,
   usuario: usuario.usuario,
   telefono: usuario.telefono ? BigInt(usuario.telefono) : null,

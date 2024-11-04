@@ -7,7 +7,7 @@ export const toUsuarioDto = (usuario: User): UsuarioDto => ({
   apellido: usuario?.apellido,
   cedula: Number(usuario.cedula),
   email: usuario.email,
-  role: 'ADMIN',
+  role: 'USER',
   direccion: usuario.direccion,
   usuario: usuario.usuario,
   telefono: usuario.telefono ? Number(usuario.telefono) : undefined,
