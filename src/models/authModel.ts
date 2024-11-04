@@ -21,6 +21,7 @@ export const signUpUser = async (
     const usuarioDb: UsuarioDb = await prisma.user.create({
       data: {
         ...usuario,
+        role: 'USER',
         password,
       },
     });
