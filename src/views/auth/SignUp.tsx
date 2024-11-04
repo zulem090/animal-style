@@ -17,7 +17,7 @@ const formValidations = yup.object({
   apellido: yup.string().optional(),
   cedula: yup.number().required(requiredMessage).min(1, 'Unidades mínima: 1'),
   telefono: yup.number().optional().min(1, 'Unidades mínima: 1'),
-  email: yup.string().email('debe ser un correo váldio').required(requiredMessage),
+  email: yup.string().email('debe ser un correo válido').required(requiredMessage),
   usuario: yup.string().required(requiredMessage),
   password: yup
     .string()
