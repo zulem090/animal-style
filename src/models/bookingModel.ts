@@ -12,26 +12,28 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import * as yup from 'yup';
 
+const requiredMessage = 'este campo es requerido';
+
 const bookingCreateSchema: yup.Schema = yup.object({
-  tipoCita: yup.string().required(),
-  nombreMascota: yup.string().required(),
-  tipoMascota: yup.string().required(),
+  tipoCita: yup.string().required(requiredMessage),
+  nombreMascota: yup.string().required(requiredMessage),
+  tipoMascota: yup.string().required(requiredMessage),
   observaciones: yup.string().optional(),
   estado: yup.string().optional(),
-  fechaHoraCita: yup.date().required(),
-  idUsuario: yup.string().required(),
+  fechaHoraCita: yup.date().required(requiredMessage),
+  idUsuario: yup.string().required(requiredMessage),
   idPaciente: yup.number().optional(),
 });
 
 const bookingUpdateSchema: yup.Schema = yup.object({
-  idCita: yup.number().required(),
-  tipoCita: yup.string().required(),
-  nombreMascota: yup.string().required(),
-  tipoMascota: yup.string().required(),
+  idCita: yup.number().required(requiredMessage),
+  tipoCita: yup.string().required(requiredMessage),
+  nombreMascota: yup.string().required(requiredMessage),
+  tipoMascota: yup.string().required(requiredMessage),
   observaciones: yup.string().optional(),
   estado: yup.string().optional(),
-  fechaHoraCita: yup.date().required(),
-  idUsuario: yup.string().required(),
+  fechaHoraCita: yup.date().required(requiredMessage),
+  idUsuario: yup.string().required(requiredMessage),
   idPaciente: yup.number().optional(),
 });
 

@@ -12,10 +12,12 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import * as yup from 'yup';
 
+const requiredMessage = 'este campo es requerido';
+
 const productoCreateSchema: yup.Schema = yup.object({
-  nombre: yup.string().required(),
-  precio: yup.number().required().min(0),
-  cantidad: yup.number().required().min(0),
+  nombre: yup.string().required(requiredMessage),
+  precio: yup.number().required(requiredMessage).min(0),
+  cantidad: yup.number().required(requiredMessage).min(0),
   descripcion: yup.string().optional(),
   idTipo: yup.number().optional(),
   idMarca: yup.number().optional(),
@@ -23,7 +25,7 @@ const productoCreateSchema: yup.Schema = yup.object({
 });
 
 const productoUpdateSchema: yup.Schema = yup.object({
-  idProducto: yup.string().required(),
+  idProducto: yup.string().required(requiredMessage),
   nombre: yup.string().optional(),
   precio: yup.number().optional().min(0),
   cantidad: yup.number().optional().min(0),

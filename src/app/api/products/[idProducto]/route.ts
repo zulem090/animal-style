@@ -3,18 +3,20 @@ import { Prisma, Producto } from '@prisma/client';
 import { NextResponse } from 'next/server';
 import * as yup from 'yup';
 
+const requiredMessage = 'este campo es requerido';
+
 const productoUpdateSchema = yup.object({
-  nombre: yup.string().required(),
-  precio: yup.number().required().min(0),
-  cantidad: yup.number().required().min(0),
+  nombre: yup.string().required(requiredMessage),
+  precio: yup.number().required(requiredMessage).min(0),
+  cantidad: yup.number().required(requiredMessage).min(0),
   descripcion: yup.string().optional(),
-  idTipo: yup.number().required(),
-  idMarca: yup.number().required(),
+  idTipo: yup.number().required(requiredMessage),
+  idMarca: yup.number().required(requiredMessage),
   imagen: yup.object().optional(),
 });
 
 const productoDeleteSchema = yup.object({
-  idProducto: yup.string().required(),
+  idProducto: yup.string().required(requiredMessage),
 });
 
 interface Context {

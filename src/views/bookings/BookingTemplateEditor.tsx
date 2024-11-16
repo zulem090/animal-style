@@ -45,7 +45,7 @@ const formValidations = yup.object({
   documento: yup.number().required(requiredMessage).min(1, 'Unidades mínima: 1'),
   nombreMascota: yup.string().required(requiredMessage),
   direccion: yup.string().required(requiredMessage),
-  telefono: yup.number().required().min(1, 'Unidades mínima: 1'),
+  telefono: yup.number().required(requiredMessage).min(1, 'Unidades mínima: 1'),
   correo: yup.string().email('debe ser un correo válido').required(requiredMessage),
   fechaHoraReserva: yup
     .date()
