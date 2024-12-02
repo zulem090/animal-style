@@ -6,15 +6,15 @@ import bcrypt from 'bcryptjs';
 interface Context {
   params: {
     email?: string;
-    username?: string;
+    usuario?: string;
     password?: string;
   };
 }
 
 export async function POST(request: Request, { params = {} }: Context): Promise<NextResponse<string>> {
-  const { email, username, password } = await request.json();
+  const { email, usuario, password } = await request.json();
 
-  if (!email || !username) {
+  if (!email || !usuario) {
     return NextResponse.json<string>('Error: se necesita el correo o usuario.');
   }
 
@@ -23,7 +23,7 @@ export async function POST(request: Request, { params = {} }: Context): Promise<
   }
 
   try {
-    if (!email && !username) {
+    if (!email && !usuario) {
       return NextResponse.json<string>('Error: se necesita el correo o usuario.');
     }
 
@@ -31,7 +31,7 @@ export async function POST(request: Request, { params = {} }: Context): Promise<
       return NextResponse.json<string>('Error: se necesita la contraseña.');
     }
 
-    const emailOrUsername = email ? email : username;
+    const emailOrUsername = email ? email : usuario;
 
     const usuarios: UsuarioDb[] | null = await prisma.user.findMany({
       where: {
