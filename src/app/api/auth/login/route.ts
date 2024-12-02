@@ -14,7 +14,7 @@ interface Context {
 export async function POST(request: Request, { params = {} }: Context): Promise<NextResponse<string>> {
   const { email, username, password } = await request.json();
 
-  if (!email && !username) {
+  if (!email || !username) {
     return NextResponse.json<string>('Error: se necesita el correo o usuario.');
   }
 
